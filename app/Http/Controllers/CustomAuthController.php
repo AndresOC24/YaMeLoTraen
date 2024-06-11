@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 class CustomAuthController extends Controller
 {
-
     public function index()
     {
         return view('auth.login');
@@ -18,22 +17,20 @@ class CustomAuthController extends Controller
 
     public function customLogin(Request $request)
     {
-       $validator =  $request->validate([
+       $validator = $request->validate([
             'email' => 'required',
             'password' => 'required',
         ]);
-
 
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             return redirect()->intended('dashboard')
                         ->withSuccess('Signed in');
         }
+
         $validator['emailPassword'] = 'Email address or password is incorrect.';
         return redirect("login")->withErrors($validator);
     }
-
-
 
     public function registration()
     {
@@ -51,17 +48,17 @@ class CustomAuthController extends Controller
         $data = $request->all();
         $check = $this->create($data);
 
-        return redirect("dashboard")->withSuccess('You have signed-in');
+        // Redirigir al usuario al formulario de inicio de sesión después del registro
+        return redirect("login")->withSuccess('Registro exitoso. Por favor, inicia sesión.');
     }
-
 
     public function create(array $data)
     {
-      return User::create([
-        'name' => $data['name'],
-        'email' => $data['email'],
-        'password' => Hash::make($data['password'])
-      ]);
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
     }
 
     public function dashboard()
