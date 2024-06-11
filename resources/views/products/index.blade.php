@@ -31,8 +31,8 @@
         text-align: center;
     }
 </style>
+
 <div class="container">
-    <!-- Encabezado con la fecha y el título "Productos" -->
     <div class="row">
         <div class="col">
             <a href="/dashboard" class="text-decoration-none">
@@ -46,24 +46,19 @@
             <div class="col-md-6">
                 <div class="card shadow-sm mb-4">
                     <div class="row g-0">
-                        <!-- Imagen del producto -->
                         <div class="col-md-4">
                             <img src="{{ $product->image }}" class="card-img-top" alt="{{ $product->title }}">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <!-- Nombre del producto -->
                                 <h5 class="card-title">{{ $product->title }}</h5>
-                                <!-- Precio del producto -->
                                 <h2 class="card-text">Bs. {{ $product->price }}</h2>
-                                <!-- Grupo de cantidad -->
                                 <div class="quantity-group">
                                     <button class="btn btn-outline-secondary" onclick="decreaseQuantity(this)">-</button>
                                     <input type="number" class="form-control" name="quantity" value="1" min="1" onchange="calculateTotal(this)">
                                     <button class="btn btn-outline-secondary" onclick="increaseQuantity(this)">+</button>
                                 </div>
-                                <h3 class="text-end subtotal">Bs. {{ $product->price }}</h3> <!-- Subtotal inicial -->
-                                <!-- Formulario para añadir al carrito -->
+                                <h3 class="text-end subtotal">Bs. {{ $product->price }}</h3>
                                 <form action="{{ route('cart.add', $product->id) }}" method="POST" class="mt-3">
                                     @csrf
                                     <input type="hidden" name="quantity" value="1">
@@ -78,7 +73,6 @@
     </div>
 </div>
 
-<!-- JavaScript para calcular subtotal y total -->
 <script>
     function increaseQuantity(button) {
         var input = button.previousElementSibling;
